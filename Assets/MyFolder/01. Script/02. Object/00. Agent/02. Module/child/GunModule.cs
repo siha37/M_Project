@@ -1,4 +1,5 @@
 ﻿using MyFolder._01._Script._02._Object._00._Agent._03._State;
+using MyFolder._01._Script._02._Object._00._Agent._04._InputProvider;
 using MyFolder._01._Script._02._Object._01._Projectile;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
         {
             _agent = agent;
             _shotIKTf = agent.transform.Find("shotIkTf");
-            _shotPivot = agent.transform.Find("shotPivot");
+            _shotPivot = _shotIKTf.Find("shotPivot");
             _projectile = agent.projectilePrefab;
         }
 
@@ -28,6 +29,14 @@ namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
 
         public void ChangedState(IAgentState oldstate, IAgentState newstate)
         {
+        }
+
+        public void InputActionSet(IInputProvider inputProvider)
+        {
+            if (inputProvider is PlayerInputProvider playerInputProvider)
+            {
+                playerInputProvider.FireStartCallback += ShotTrigger;
+            }
         }
 
         public void Update()
@@ -53,7 +62,7 @@ namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
 
         private void ShotTrigger()
         {
-            
+            BulletCreate();
         }
 
         private void BulletCreate()
@@ -62,7 +71,8 @@ namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
             Vector3 spawnPoint = _shotPivot.position;
             Object.Instantiate(_projectile, spawnPoint, rot).TryGetComponent(out Projectile newP);
 
-            newP.Init();
+            BaseStateModule state = _agent.GetModule<BaseStateModule>();
+            newP.Init(state.GetBulletSpeed(),state.GetBulletDamage());
         }
 
         #endregion

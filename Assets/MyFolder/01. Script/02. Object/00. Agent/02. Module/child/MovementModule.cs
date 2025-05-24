@@ -1,4 +1,5 @@
 using MyFolder._01._Script._02._Object._00._Agent._03._State;
+using MyFolder._01._Script._02._Object._00._Agent._04._InputProvider;
 using UnityEngine;
 
 namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
@@ -51,6 +52,11 @@ namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
 
         public void ChangedState(IAgentState oldstate, IAgentState newstate)
         {
+        }
+
+        public void InputActionSet(IInputProvider inputProvider)
+        {
+            
         }
 
         public void Jump()

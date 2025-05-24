@@ -17,6 +17,7 @@ namespace MyFolder._01._Script._02._Object._00._Agent._04._InputProvider
         private InputAction _mouseAction;
         private InputAction _moveAction;
         private InputAction _interactAction;
+        private InputAction _fireAction;
 
         #endregion
         
@@ -32,7 +33,9 @@ namespace MyFolder._01._Script._02._Object._00._Agent._04._InputProvider
         
         public delegate void VoidCallback();
         public VoidCallback InteractStartCallback; 
-        public VoidCallback InteractEndCallback; 
+        public VoidCallback InteractEndCallback;
+        public VoidCallback FireStartCallback;
+        public VoidCallback FireEndCallback;
         
         #endregion
 
@@ -47,8 +50,13 @@ namespace MyFolder._01._Script._02._Object._00._Agent._04._InputProvider
             _mouseAction = _playerInput["Tracking"];
             _moveAction = _playerInput["Move"];
             _interactAction = _playerInput["Interact"];
+            _fireAction = _playerInput["Attack"];
+            
             _interactAction.started += InteractStarted;
             _interactAction.canceled += InteractEnded;
+            _fireAction.started += FireStarted;
+            _fireAction.canceled += FireEnded;
+            
         }
 
         #endregion
@@ -75,6 +83,16 @@ namespace MyFolder._01._Script._02._Object._00._Agent._04._InputProvider
         private void InteractEnded(InputAction.CallbackContext context)
         {
             InteractEndCallback?.Invoke();
+        }
+
+        private void FireStarted(InputAction.CallbackContext context)
+        {
+            FireStartCallback?.Invoke();
+        }
+
+        private void FireEnded(InputAction.CallbackContext context)
+        {
+            FireEndCallback?.Invoke();
         }
         
         #endregion

@@ -1,5 +1,6 @@
 ﻿using MyFolder._01._Script._02._Object._00._Agent._03._State;
 using MyFolder._01._Script._02._Object._00._Agent._03._State.child;
+using MyFolder._01._Script._02._Object._00._Agent._04._InputProvider;
 
 namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
 {
@@ -28,6 +29,10 @@ namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
             {
                 
             }
+        }
+
+        public void InputActionSet(IInputProvider inputProvider)
+        {
         }
     }
 }

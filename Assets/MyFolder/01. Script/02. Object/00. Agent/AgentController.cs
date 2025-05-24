@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MyFolder._01._Script._02._Object._00._Agent._02._Module;
 using MyFolder._01._Script._02._Object._00._Agent._03._State;
@@ -61,6 +62,7 @@ namespace MyFolder._01._Script._02._Object._00._Agent
             ModuleInit();
             StateInit();
             InputProviderInit();
+            ModuleInputDelegateInit();
         }
 
         #endregion
@@ -150,6 +152,14 @@ namespace MyFolder._01._Script._02._Object._00._Agent
         protected virtual void ModuleInit()
         {
 
+        }
+
+        protected void ModuleInputDelegateInit()
+        {
+            foreach (KeyValuePair<Type,IAgentModule> module in Modules)
+            {
+                module.Value.InputActionSet(InputProvider);
+            }
         }
         #endregion
 

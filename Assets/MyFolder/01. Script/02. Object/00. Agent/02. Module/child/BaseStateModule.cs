@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using MyFolder._01._Script._02._Object._00._Agent._00._Player;
 using MyFolder._01._Script._02._Object._00._Agent._03._State;
+using MyFolder._01._Script._02._Object._00._Agent._04._InputProvider;
 using MyFolder._01._Script._02._Object._00._Agent._05._Data;
 
 namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
@@ -14,6 +15,11 @@ namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
         #endregion
 
         public void ChangedState(IAgentState oldstate, IAgentState newstate)
+        {
+            
+        }
+
+        public void InputActionSet(IInputProvider inputProvider)
         {
             
         }
@@ -39,9 +45,19 @@ namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
             return BaseData.MoveSeed;
         }
 
-        public void GetMaxHp()
+        public float GetMaxHp()
         {
-            
+            return BaseData.MaxHP;
         }
+
+        public float GetBulletSpeed()
+        {
+            return BaseData.BulletSpeed;
+        }
+        public float GetBulletDamage()
+        {
+            return BaseData.BulletDamage;
+        }
+        
     }
 }
