@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using MyFolder._01._Script._02._Object._08.PathFinding;
 using UnityEditor;
 using UnityEngine;
@@ -20,3 +22,4 @@ namespace MyFolder._01._Script._02._Object._1001.Editor._08._PathFinding
         }
     }
 }
+#endif

@@ -32,9 +32,9 @@ namespace MyFolder._01._Script._02._Object._00._Agent._00._Player
         
         /********************  ********************/
         #region INIT
-        protected override void Start()
+        public override void OnStartClient()
         {
-            base.Start();
+            base.OnStartClient();
         }
 
         #endregion

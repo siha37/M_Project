@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FishNet.Object;
 using MyFolder._01._Script._02._Object._00._Agent._02._Module;
 using MyFolder._01._Script._02._Object._00._Agent._03._State;
 using MyFolder._01._Script._02._Object._00._Agent._04._InputProvider;
@@ -8,7 +9,7 @@ using UnityEngine.InputSystem;
 
 namespace MyFolder._01._Script._02._Object._00._Agent
 {
-    public class AgentController : MonoBehaviour
+    public class AgentController : NetworkBehaviour
     {
 
         #region STATE_VARIABLES
@@ -56,13 +57,16 @@ namespace MyFolder._01._Script._02._Object._00._Agent
         
         /**********************INIT**********************/
         #region INIT
-        protected virtual void Start()
+        public override void OnStartClient()
         {
-            moduleAble = true;
             ModuleInit();
             StateInit();
-            InputProviderInit();
-            ModuleInputDelegateInit();
+            if(IsOwner)
+            {
+                moduleAble = true;
+                InputProviderInit();
+                ModuleInputDelegateInit();
+            }
         }
 
         #endregion
@@ -71,6 +75,12 @@ namespace MyFolder._01._Script._02._Object._00._Agent
         #region UPDATE
         private void Update()
         {
+            if (!IsOwner)
+            {
+                Debug.Log(gameObject.name + " is no longer owned");
+                moduleAble = false;
+                return;
+            }
             if (moduleAble)
             {
                 foreach (var state in TickableModules)
@@ -83,6 +93,8 @@ namespace MyFolder._01._Script._02._Object._00._Agent
         }
         private void FixedUpdate()
         {
+            if (!IsOwner)
+                return;
             if (moduleAble)
             {
                 foreach (var state in TickableModules)
