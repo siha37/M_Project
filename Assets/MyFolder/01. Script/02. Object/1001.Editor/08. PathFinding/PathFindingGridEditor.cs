@@ -15,6 +15,7 @@ namespace MyFolder._01._Script._02._Object._1001.Editor._08._PathFinding
             if (GUILayout.Button("Create Node"))
             {
                 pathFindingGrid.PathFinding();
+                pathFindingGrid.GenerateGridMesh();
             }
         }
     }
