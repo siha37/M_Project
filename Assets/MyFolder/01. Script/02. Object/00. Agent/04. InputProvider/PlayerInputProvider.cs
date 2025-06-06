@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace MyFolder._01._Script._02._Object._00._Agent._04._InputProvider
 {
-    public class PlayerInputProvider : IInputProvider
+    public class PlayerInputProvider : InputProvider
     {
         #region Other
 
@@ -20,28 +20,15 @@ namespace MyFolder._01._Script._02._Object._00._Agent._04._InputProvider
         private InputAction _fireAction;
 
         #endregion
-        
-        #region OUTPUT_VARIABLES
-        
-        public Vector2 MousePos { get; set; }
-        public Vector2 WorldMousePos => _playerCamera.ScreenToWorldPoint(MousePos);
-        public Vector2 MovePos { get; set; }
-        
+     
+        #region INPUT_VALUE
+        public override Vector2 WorldMousePos => _playerCamera.ScreenToWorldPoint(MousePos);
         #endregion
-        
-        #region DELEGATES
-        
-        public delegate void VoidCallback();
-        public VoidCallback InteractStartCallback; 
-        public VoidCallback InteractEndCallback;
-        public VoidCallback FireStartCallback;
-        public VoidCallback FireEndCallback;
-        
-        #endregion
+
 
         #region INIT
 
-        public void Initialize(AgentController controller)
+        public override void Initialize(AgentController controller)
         {
             _playerCamera = Camera.main;
                 
@@ -56,14 +43,13 @@ namespace MyFolder._01._Script._02._Object._00._Agent._04._InputProvider
             _interactAction.canceled += InteractEnded;
             _fireAction.started += FireStarted;
             _fireAction.canceled += FireEnded;
-            
         }
 
         #endregion
 
         #region UPDATE
 
-        public void Update(float deltaTime)
+        public override void Update(float deltaTime)
         {
             if (!_playerInput)
                 return;
@@ -73,28 +59,6 @@ namespace MyFolder._01._Script._02._Object._00._Agent._04._InputProvider
 
         #endregion
 
-        #region EventMethod
 
-        private void InteractStarted(InputAction.CallbackContext context)
-        {
-            InteractStartCallback?.Invoke();
-        }
-
-        private void InteractEnded(InputAction.CallbackContext context)
-        {
-            InteractEndCallback?.Invoke();
-        }
-
-        private void FireStarted(InputAction.CallbackContext context)
-        {
-            FireStartCallback?.Invoke();
-        }
-
-        private void FireEnded(InputAction.CallbackContext context)
-        {
-            FireEndCallback?.Invoke();
-        }
-        
-        #endregion
     }
 }

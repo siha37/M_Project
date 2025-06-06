@@ -1,4 +1,5 @@
 ﻿using MyFolder._01._Script._02._Object._00._Agent;
+using MyFolder._01._Script._02._Object._00._Agent._02._Module.child.Commonness;
 using UnityEngine;
 
 namespace MyFolder._01._Script._02._Object._01._Projectile
@@ -8,7 +9,8 @@ namespace MyFolder._01._Script._02._Object._01._Projectile
         private float _speed;
         private float _damage;
         private Transform _tf;
-
+        [SerializeField] private LayerMask _hitLayer;
+        [SerializeField] private LayerMask _isDamageLayer;
         private void Start()
         {
             _tf = transform;
@@ -26,12 +28,17 @@ namespace MyFolder._01._Script._02._Object._01._Projectile
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            if (col.gameObject.CompareTag("Player") || col.gameObject.CompareTag("Enemy"))
+            if ((_isDamageLayer & (1 << col.gameObject.layer)) != 0)
             {
                 if (col.TryGetComponent(out AgentController agent))
                 {
-                    Debug.Log(agent);
+                    agent.GetModule<StateModule>().GetSetCurrentHp -= _damage;
+                    Destroy(this.gameObject);
                 }
+            }
+            else if ((_hitLayer & (1 << col.gameObject.layer)) != 0)
+            {
+                Destroy(this.gameObject);
             }
         }
     }

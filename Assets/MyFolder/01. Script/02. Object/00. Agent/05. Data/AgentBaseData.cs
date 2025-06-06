@@ -3,12 +3,12 @@
     [System.Serializable]
     public class AgentBaseData
     {
-        public float MoveSeed = 2;
+        public float MoveSeed = 5;
         public float MaxHP = 100;
+        public float CurrentHP = 100;
         public float BulletAmount = 15;
-        public float BulletSpeed = 3;
+        public float BulletSpeed = 8;
         public float BulletDamage = 10;
-        public float ReloadTime = 2;
-        
+        public float ReloadTime = 3;
     }
 }

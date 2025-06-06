@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityInput;
 using FishNet.Object;
 using MyFolder._01._Script._02._Object._00._Agent._02._Module;
+using MyFolder._01._Script._02._Object._00._Agent._02._Module.child.Commonness;
 using MyFolder._01._Script._02._Object._00._Agent._03._State;
 using MyFolder._01._Script._02._Object._00._Agent._04._InputProvider;
 using UnityEngine;
@@ -52,13 +54,19 @@ namespace MyFolder._01._Script._02._Object._00._Agent
         }
 
         #endregion
-        
 
+        #region CALLBACK
+
+        public delegate void voidCallBack();
+        public voidCallBack OnStartAllCallBack;
+
+        #endregion
         
         /**********************INIT**********************/
         #region INIT
         public override void OnStartClient()
         {
+            OnStart();
             ModuleInit();
             StateInit();
             if(IsOwner)
@@ -67,6 +75,13 @@ namespace MyFolder._01._Script._02._Object._00._Agent
                 InputProviderInit();
                 ModuleInputDelegateInit();
             }
+            
+            OnStartAllCallBack?.Invoke();
+        }
+
+        protected virtual void OnStart()
+        {
+            
         }
 
         #endregion
@@ -77,7 +92,6 @@ namespace MyFolder._01._Script._02._Object._00._Agent
         {
             if (!IsOwner)
             {
-                Debug.Log(gameObject.name + " is no longer owned");
                 moduleAble = false;
                 return;
             }
@@ -109,7 +123,6 @@ namespace MyFolder._01._Script._02._Object._00._Agent
 
         protected virtual void InputProviderInit()
         {
-            InputProvider = new AIInputProvider();
         }
         
         #endregion
@@ -168,6 +181,7 @@ namespace MyFolder._01._Script._02._Object._00._Agent
 
         protected void ModuleInputDelegateInit()
         {
+            GetModule<StateModule>().OnHitCallbackRf += GetSetCurrentHpRPC;
             foreach (KeyValuePair<Type,IAgentModule> module in Modules)
             {
                 module.Value.InputActionSet(InputProvider);
@@ -194,7 +208,7 @@ namespace MyFolder._01._Script._02._Object._00._Agent
         }
         protected virtual void StateInit()
         {
-
+            StateMachine = new AgentStateMachine(this);
         }
         #endregion
         
@@ -217,5 +231,14 @@ namespace MyFolder._01._Script._02._Object._00._Agent
         }
         #endregion
 
+        #region NETWORKRPC
+
+        [ObserversRpc]
+        private void GetSetCurrentHpRPC(float value)
+        {
+            GetModule<StateModule>().GetSetCurrentHp -= value;
+        }
+
+        #endregion
     }
 }

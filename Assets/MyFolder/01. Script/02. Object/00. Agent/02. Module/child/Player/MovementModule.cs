@@ -1,3 +1,4 @@
+using MyFolder._01._Script._02._Object._00._Agent._02._Module.child.Commonness;
 using MyFolder._01._Script._02._Object._00._Agent._03._State;
 using MyFolder._01._Script._02._Object._00._Agent._04._InputProvider;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
     public class MovementModule : IAgentTickableModule
     {
         AgentController _agent;
-        BaseStateModule _baseStateModule;
+        StateModule _stateModule;
         
         
         
@@ -24,7 +25,7 @@ namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
         public void Init(AgentController agent)
         {
             this._agent = agent;
-            _baseStateModule = agent.GetModule<BaseStateModule>();
+            _stateModule = agent.GetModule<StateModule>();
             agent.TryGetComponent(out _rd);
         }
 
@@ -47,7 +48,7 @@ namespace MyFolder._01._Script._02._Object._00._Agent._02._Module.child
         public void Update()
         {
             if (_rd)
-                _rd.linearVelocity = _agent.InputProviderInstance.MovePos * _baseStateModule.GetMoveSpeed();
+                _rd.linearVelocity = _agent.InputProviderInstance.MovePos * _stateModule.GetMoveSpeed;
         }
 
         public void ChangedState(IAgentState oldstate, IAgentState newstate)

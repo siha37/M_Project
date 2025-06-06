@@ -1,4 +1,4 @@
-using MyFolder._01._Script._02._Object._00._Agent._00._Player;
+
 
 namespace MyFolder._01._Script._02._Object._00._Agent._03._State
 {
@@ -16,16 +16,16 @@ namespace MyFolder._01._Script._02._Object._00._Agent._03._State
     {
         /********************���� ���� ����********************/
 
-        PlayerController player;
+        AgentController agent;
 
         IAgentState currentState;
 
 
         /*********************������**************************/
 
-        public AgentStateMachine(PlayerController player)
+        public AgentStateMachine(AgentController agentController)
         {
-            this.player = player;
+            this.agent = agentController;
         }
 
         /********************�ʱ�ȭ �Լ�**********************/
@@ -49,7 +49,7 @@ namespace MyFolder._01._Script._02._Object._00._Agent._03._State
             oldState = currentState;
             currentState?.Exit();
             currentState = newState;
-            currentState?.Enter(player);
+            currentState?.Enter(agent);
         }
 
         public string GetCurrentState()

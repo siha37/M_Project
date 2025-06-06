@@ -1,4 +1,5 @@
 using MyFolder._01._Script._02._Object._00._Agent._02._Module.child;
+using MyFolder._01._Script._02._Object._00._Agent._02._Module.child.Commonness;
 using MyFolder._01._Script._02._Object._00._Agent._03._State;
 using MyFolder._01._Script._02._Object._00._Agent._03._State.child;
 using MyFolder._01._Script._02._Object._00._Agent._04._InputProvider;
@@ -21,12 +22,9 @@ namespace MyFolder._01._Script._02._Object._00._Agent._00._Player
         /********************Property********************/
 
 
-        #region PROPERTY
-        private float backgroundSpeed = 1f;
-        [SerializeField] private float dashMultiplier = 3f; 
-
-        [SerializeField] private SpriteRenderer spriteObject;
-        public SpriteRenderer SpriteObject => spriteObject; 
+        #region PROPERTY 
+        
+        
         
         #endregion
         
@@ -36,7 +34,6 @@ namespace MyFolder._01._Script._02._Object._00._Agent._00._Player
         {
             base.OnStartClient();
         }
-
         #endregion
         /********************Protected Method**********************/
 
@@ -54,7 +51,7 @@ namespace MyFolder._01._Script._02._Object._00._Agent._00._Player
 
         protected override void ModuleInit()
         {
-            AddModule<BaseStateModule>();
+            AddModule<StateModule>();
             AddModule<MovementModule>();
             AddModule<GunModule>();
         }
@@ -65,7 +62,7 @@ namespace MyFolder._01._Script._02._Object._00._Agent._00._Player
 
         protected override void StateInit()
         {
-            StateMachine = new AgentStateMachine(this);
+            base.StateInit();
             SetState<IdleState>();
         }
 
